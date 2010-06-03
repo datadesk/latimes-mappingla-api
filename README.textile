@@ -1,0 +1,7 @@
+h1. latimes-mappingla-api
+
+A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.com/mapping-la/api/.
+
+h3. Example usage
+
+<pre><code>>> from mappingla import mappingla</code></pre>
