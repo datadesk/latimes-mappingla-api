@@ -4,4 +4,9 @@ A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.co
 
 h3. Example usage
 
+*Get it going*
 <pre><code>>> from mappingla import mappingla</code></pre>
+
+*Retrieve all neighborhood*
+<pre><code>>> hood_list = mappingla.neighborhoods.all()</code></pre>
+
