@@ -67,7 +67,6 @@ class BaseGeographyObject(object):
         attr = '_cached_%s' % format
         # If it doesn't already exist...
         if not getattr(self, attr, None):
-            print "Hitting API: %s" % url
             # Request the url
             response = urllib2.urlopen(url).read()
             # A little extra parsing for json results
@@ -123,6 +122,7 @@ class Region(BaseGeographyObject):
 class mappingla(object):
 
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
+    _cache = {}
 
     @staticmethod
     def _makeurl(version=u'v1', area_type=None, method=None, format='json', params=None):
@@ -147,8 +147,10 @@ class mappingla(object):
         A private method for calling the API.
         """
         url = mappingla._makeurl(**kwargs)
-        print "Hitting API: %s" % url
-        response = urllib2.urlopen(url).read()
+        response = mappingla._cache.get(url, None)
+        if not response:
+            response = urllib2.urlopen(url).read()
+            mappingla._cache[url] = response
         return response
 
     @staticmethod
