@@ -42,6 +42,18 @@ except ImportError:
     import simplejson as json
 
 
+class GeographyDoesNotExist(urllib2.HTTPError):
+    """
+    Raised if an API call returns an HTTPError. This also might
+    get raised if something is borked on our end and returning 404s, 
+    though urllib2.URLError is raised if the server can't be found.
+    """
+    def __init__(self, value):
+        self.parameter = value
+    def __str__(self):
+        return repr(self.parameter)
+
+
 class BaseGeographyObject(object):
     """
     An abstract version of the objects returned by the API.
@@ -153,10 +165,13 @@ class mappingla(object):
         response = mappingla._cache.get(url, None)
         # If not...
         if not response:
-            # Go get it
-            response = urllib2.urlopen(url).read()
-            # And add it to the cache
-            mappingla._cache[url] = response
+            try:
+                # Go get it
+                response = urllib2.urlopen(url).read()
+                # And add it to the cache
+                mappingla._cache[url] = response
+            except urllib2.HTTPError:
+                raise GeographyDoesNotExist("Not found")
         return response
 
     @staticmethod
@@ -207,7 +222,7 @@ class mappingla(object):
                     'params': { 'lat': lat, 'lng': lng },
                 }
             else:
-                raise ValueError("You did not include a validate keyword \
+                raise ValueError("You did not include a valid keyword \
                     argument. You must include either a slug, or a pair of \
                     lat and lng coordinates.")
 
