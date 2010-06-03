@@ -7,22 +7,31 @@ h3. Example usage
 *Get it going*
 <pre><code>>> from mappingla import mappingla</code></pre>
 
-*Retrieve all neighborhoods*
-<pre><code>>> hood_list = mappingla.neighborhoods.all()</code></pre>
+*Retrieve all neighborhoods or regions*
+<pre><code>>> hood_list = mappingla.neighborhoods.all()
+>> region_list = mappingla.regions.all()</code></pre>
 
-*Retrieve all regions*
-<pre><code>>> region_list = mappingla.regions.all()</code></pre>
+*Retrieve a neighborhood or region using its slug*
+<pre><code>>> dtla = mappingla.neighborhoods.get(slug='downtown')
+>> westside = mappingla.regions.get(slug='westside')</code></pre>
 
-*Retrieve a neighborhood using its slug*
-<pre><code>>> dtla = mappingla.neighborhoods.get(slug='downtown')</code></pre>
-
-*Retrieve a region using its slug*
-<pre><code>>> westside = mappingla.regions.get(slug='westside')</code></pre>
-
-*Find the neighborhood that contains a pair of coordinates*
+*Find the neighborhood or region that contains a pair of coordinates*
 <pre><code>>> mappingla.neighborhoods.get(lat=34.053, lng=-118.245)
-<Neighborhood: Downtown></code></pre>
-
-*Find the region that contains a pair of coordinates*
-<pre><code>>> mappingla.regions.get(lat=34.053, lng=-118.245)
+<Neighborhood: Downtown>
+>> mappingla.regions.get(lat=34.053, lng=-118.245)
 <Region: Central L.A.></code></pre>
+
+*Retrieve the boundaries of a neighborhood or region in KML, GeoJSON or KMZ format*
+<pre><code>>> dtla.kml
+...
+>> dtla.json
+...
+>> dtla.kmz
+...
+>> westside.kml
+...
+>> westside.json
+...
+>> westside.kmz
+...
+</code></pre>
