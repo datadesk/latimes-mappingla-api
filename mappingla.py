@@ -19,6 +19,12 @@ Acton
 ...
 >> a.kmz
 ...
+>> dtla = mappingla.neighborhoods.get(slug='downtown')
+print dtla
+Downtown
+>> central = mappingla.regions.get(lat=34.053, lng=-118.245)
+print central
+Central
 """
  
 __author__ = "Ben Welsh (ben.welsh@latimes.com)"
@@ -28,7 +34,6 @@ __license__ = "MIT"
 
 import urllib, urllib2
 import datetime
-from pprint import pprint
 try:
     import json
 except ImportError:
@@ -126,7 +131,6 @@ class mappingla(object):
         url = mappingla._makeurl(**kwargs)
         print "Hitting API: %s" % url
         response = urllib2.urlopen(url).read()
-        pprint(response)
         return response
 
     @staticmethod
@@ -152,28 +156,26 @@ class mappingla(object):
                     'method': 'getBySlug',
                     'params': { 'slug': slug },
                 }
-                response = mappingla._apicall(**kwargs)
-                obj = Neighborhood(json.loads(response))
-                obj.kml_url = mappingla._makeurl(format='kml', **kwargs)
-                obj.kmz_url = mappingla._makeurl(format='kmz', **kwargs)
-                obj.json_url = mappingla._makeurl(format='json', **kwargs)
-                return obj
             elif lat and lng:
                 kwargs = {
                     'area_type': 'neighborhood',
                     'method': 'getByLatLng',
                     'params': { 'lat': lat, 'lng': lng },
                 }
-                response = mappingla._apicall(**kwargs)
-                obj = Neighborhood(json.loads(response))
-                obj.kml_url = mappingla._makeurl(format='kml', **kwargs)
-                obj.kmz_url = mappingla._makeurl(format='kmz', **kwargs)
-                obj.json_url = mappingla._makeurl(format='json', **kwargs)
-                return obj
             else:
                 raise ValueError("You did not include a validate keyword \
                     argument. You must include either a slug, or a pair of \
                     lat and lng coordinates.")
+
+            # Get the data (This should be cached at some point)
+            response = mappingla._apicall(**kwargs)
+            obj = Neighborhood(json.loads(response))
+            # Mock up the other urls
+            obj.kml_url = mappingla._makeurl(format='kml', **kwargs)
+            obj.kmz_url = mappingla._makeurl(format='kmz', **kwargs)
+            obj.json_url = mappingla._makeurl(format='json', **kwargs)
+            # Pass it out
+            return obj
 
     class regions(object):
 
@@ -181,4 +183,31 @@ class mappingla(object):
         def all():
             object_list = mappingla._getall('regions')
             return [Neighborhood(i) for i in object_list]
+
+        @staticmethod
+        def get(slug=None, lat=None, lng=None):
+            if slug:
+                kwargs = {
+                    'area_type': 'region',
+                    'method': 'getBySlug',
+                    'params': { 'slug': slug },
+                }
+            elif lat and lng:
+                kwargs = {
+                    'area_type': 'region',
+                    'method': 'getByLatLng',
+                    'params': { 'lat': lat, 'lng': lng },
+                }
+            else:
+                raise ValueError("You did not include a validate keyword argument.")
+
+            # Get the data (This should be cached at some point)
+            response = mappingla._apicall(**kwargs)
+            obj = Region(json.loads(response))
+            # Mock up the other urls
+            obj.kml_url = mappingla._makeurl(format='kml', **kwargs)
+            obj.kmz_url = mappingla._makeurl(format='kmz', **kwargs)
+            obj.json_url = mappingla._makeurl(format='json', **kwargs)
+            # Pass it out
+            return obj
 
