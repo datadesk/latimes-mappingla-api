@@ -23,8 +23,10 @@ Acton
 print dtla
 Downtown
 >> central = mappingla.regions.get(lat=34.053, lng=-118.245)
-print central
+>> print central
 Central
+>> central.kml
+...
 """
  
 __author__ = "Ben Welsh (ben.welsh@latimes.com)"
@@ -77,18 +79,30 @@ class BaseGeographyObject(object):
 
     @property
     def json(self):
+        """
+        Return the boundaries in GeoJSON format.
+        """
         return self._get_url(self.json_url, 'json')
 
     @property
     def kml(self):
+        """
+        Return the boundaries in KML format.
+        """
         return self._get_url(self.kml_url, 'kml')
 
     @property
     def kmz(self):
+        """
+        Return the boundaries in KMZ format.
+        """
         return self._get_url(self.kmz_url, 'kmz')
 
     @property
     def url(self):
+        """
+        Return the url for the detail page at mappingla.com.
+        """
         return self.latimes_url
 
 
@@ -112,12 +126,16 @@ class mappingla(object):
 
     @staticmethod
     def _makeurl(version=u'v1', area_type=None, method=None, format='json', params=None):
+        """
+        Creates a URL according to the API's structure.
+        """
         url = mappingla.BASE_URL % {
             'version': version,
             'area_type': area_type,
             'method': method,
             'format': format,
         }
+        # Add query string parameters if there are any
         if params:
            query_string = u'?%s' % urllib.urlencode(params)
            url = url + query_string
@@ -145,11 +163,29 @@ class mappingla(object):
 
         @staticmethod
         def all():
+            """
+            Retrieve all objects.
+            
+            Example usage:
+            
+                >> mappingla.neighborhoods.all()
+                
+            """
             object_list = mappingla._getall('neighborhoods')
             return [Neighborhood(i) for i in object_list]
 
         @staticmethod
         def get(slug=None, lat=None, lng=None):
+            """
+            Retrieve an object using either a slug or a pair of latitude
+            and longitude coordinates.
+            
+            Example usage:
+            
+                >> mappingla.neighborhoods.get(slug='central-la')
+                >> mappingla.neighborhoods.get(lat=34.053, lng=-118.245)
+
+            """
             if slug:
                 kwargs = {
                     'area_type': 'neighborhood',
@@ -181,11 +217,29 @@ class mappingla(object):
 
         @staticmethod
         def all():
+            """
+            Retrieve all objects.
+            
+            Example usage:
+            
+                >> mappingla.regions.all()
+                
+            """
             object_list = mappingla._getall('regions')
             return [Neighborhood(i) for i in object_list]
 
         @staticmethod
         def get(slug=None, lat=None, lng=None):
+            """
+            Retrieve an object using either a slug or a pair of latitude
+            and longitude coordinates.
+            
+            Example usage:
+            
+                >> mappingla.regions.get(slug='central-la')
+                >> mappingla.regions.get(lat=34.053, lng=-118.245)
+                
+            """
             if slug:
                 kwargs = {
                     'area_type': 'region',
