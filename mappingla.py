@@ -122,6 +122,8 @@ class Region(BaseGeographyObject):
 class mappingla(object):
 
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
+    # For storing calls we've already made.
+    # URLs will be keys, responses will be values
     _cache = {}
 
     @staticmethod
@@ -147,9 +149,13 @@ class mappingla(object):
         A private method for calling the API.
         """
         url = mappingla._makeurl(**kwargs)
+        # Check if this URL is already in the cache
         response = mappingla._cache.get(url, None)
+        # If not...
         if not response:
+            # Go get it
             response = urllib2.urlopen(url).read()
+            # And add it to the cache
             mappingla._cache[url] = response
         return response
 
