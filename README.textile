@@ -9,6 +9,8 @@ h3. Example usage
 
 *Retrieve all neighborhoods or regions*
 <pre><code>>> hood_list = mappingla.neighborhoods.all()
+>> print hood_list[0].name
+Acton
 >> region_list = mappingla.regions.all()</code></pre>
 
 *Retrieve a neighborhood or region using its slug*
