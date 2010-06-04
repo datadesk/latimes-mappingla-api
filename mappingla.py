@@ -42,18 +42,6 @@ except ImportError:
     import simplejson as json
 
 
-class GeographyDoesNotExist(urllib2.HTTPError):
-    """
-    Raised if an API call returns an HTTPError. This also might
-    get raised if something is borked on our end and returning 404s, 
-    though urllib2.URLError is raised if the server can't be found.
-    """
-    def __init__(self, value):
-        self.parameter = value
-    def __str__(self):
-        return repr(self.parameter)
-
-
 class BaseGeographyObject(object):
     """
     An abstract version of the objects returned by the API.
@@ -131,6 +119,20 @@ class Region(BaseGeographyObject):
     pass
 
 
+class GeographyDoesNotExist(Exception):
+    """
+    Raised if an API call returns a 404 error.
+
+    The API returns a 404 when a request doesn't return data, 
+    so it doesn't indicate that the API is down, just that
+    the API call returned nothing.
+    """
+    def __init__(self, value):
+        self.parameter = value
+    def __str__(self):
+        return repr(self.value)
+
+
 class mappingla(object):
 
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
@@ -170,8 +172,13 @@ class mappingla(object):
                 response = urllib2.urlopen(url).read()
                 # And add it to the cache
                 mappingla._cache[url] = response
-            except urllib2.HTTPError:
-                raise GeographyDoesNotExist("Not found")
+            except urllib2.HTTPError as e:
+                # If it's a 404 raise our custom error.
+                if e.getcode() == 404:
+                    raise GeographyDoesNotExist("The API data you requested could not be found.")
+                else:
+                    raise e
+
         return response
 
     @staticmethod
