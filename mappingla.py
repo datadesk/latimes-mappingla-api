@@ -6,41 +6,44 @@ of neighborhoods and regions for all of Los Angeles County.
 
 Data are available in KML, GeoJSON and KMZ formats.
 
+Futher documentation:
+
+    http://projects.latimes.com/mapping-la/api/
+
 Example usage:
 
-# Get it going
->> from mappingla import mappingla
+    # Get it going
+    >> from mappingla import mappingla
 
-# Retrieve all neighborhoods or regions
->> hood_list = mappingla.neighborhoods.all()
->> print hood_list[0].name
-Acton
->> region_list = mappingla.regions.all()
+    # Retrieve all neighborhoods or regions
+    >> hood_list = mappingla.neighborhoods.all()
+    >> print hood_list[0].name
+    Acton
+    >> region_list = mappingla.regions.all()
 
-# Retrieve a neighborhood or region using its slug
->> dtla = mappingla.neighborhoods.get(slug='downtown')
->> westside = mappingla.regions.get(slug='westside')
+    # Retrieve a neighborhood or region using its slug
+    >> dtla = mappingla.neighborhoods.get(slug='downtown')
+    >> westside = mappingla.regions.get(slug='westside')
 
-# Find the neighborhood or region that contains a pair of coordinates
->> mappingla.neighborhoods.get(lat=34.053, lng=-118.245)
-<Neighborhood: Downtown>
->> mappingla.regions.get(lat=34.053, lng=-118.245)
-<Region: Central L.A.>
+    # Find the neighborhood or region that contains a pair of coordinates
+    >> mappingla.neighborhoods.get(lat=34.053, lng=-118.245)
+    <Neighborhood: Downtown>
+    >> mappingla.regions.get(lat=34.053, lng=-118.245)
+    <Region: Central L.A.>
 
-# Retrieve the boundaries of a neighborhood or region in KML, GeoJSON or KMZ format
->> dtla.kml
-...
->> dtla.json
-...
->> dtla.kmz
-...
->> westside.kml
-...
->> westside.json
-...
->> westside.kmz
-...
-</code></pre>
+    # Retrieve the boundaries of a neighborhood or region in KML, GeoJSON or KMZ format
+    >> dtla.kml
+    ...
+    >> dtla.json
+    ...
+    >> dtla.kmz
+    ...
+    >> westside.kml
+    ...
+    >> westside.json
+    ...
+    >> westside.kmz
+    ...
 """
  
 __author__ = "Ben Welsh (ben.welsh@latimes.com)"
@@ -155,7 +158,6 @@ class mappingla(object):
     """
     The main public method for interacting with the API.
     """
-
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
     # For storing calls we've already made.
     # URLs will be keys, responses will be values
