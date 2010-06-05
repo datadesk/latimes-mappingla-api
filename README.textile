@@ -13,6 +13,8 @@ A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.co
 
 "Mapping L.A.":http://mappingla.com is the Los Angeles Times’ resource for boundaries, demographics, schools, and news in Los Angeles County. With this API, you can quickly retrieve the boundaries of neighborhoods and regions in "KML":http://en.wikipedia.org/wiki/Keyhole_Markup_Language, "KMZ":http://en.wikipedia.org/wiki/Keyhole_Markup_Language#Structure or "GeoJSON":http://en.wikipedia.org/wiki/GeoJSON format.
 
+The code owes a lot to the fine work on "python-sunlightapi":http://github.com/sunlightlabs/python-sunlightapi and "python-nytcongressapi":http://github.com/dwillis/python-nytcongressapi.
+
 h2. Usage
 
 *Get it going*
