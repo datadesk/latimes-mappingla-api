@@ -9,8 +9,6 @@
                         \/_/    \/_/                \_/__/                     
 </code></pre>
 
-h2. About
-
 A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.com/mapping-la/api/. 
 
 "Mapping L.A.":http://mappingla.com is the Los Angeles Times’ resource for boundaries, demographics, schools, and news in Los Angeles County.
