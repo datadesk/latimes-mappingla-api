@@ -8,25 +8,39 @@ Data are available in KML, GeoJSON and KMZ formats.
 
 Example usage:
 
+# Get it going
 >> from mappingla import mappingla
+
+# Retrieve all neighborhoods or regions
 >> hood_list = mappingla.neighborhoods.all()
->> a = hood[0]
->> print a
+>> print hood_list[0].name
 Acton
->> a.kml
-...
->> a.json
-...
->> a.kmz
-...
+>> region_list = mappingla.regions.all()
+
+# Retrieve a neighborhood or region using its slug
 >> dtla = mappingla.neighborhoods.get(slug='downtown')
-print dtla
-Downtown
->> central = mappingla.regions.get(lat=34.053, lng=-118.245)
->> print central
-Central
->> central.kml
+>> westside = mappingla.regions.get(slug='westside')
+
+# Find the neighborhood or region that contains a pair of coordinates
+>> mappingla.neighborhoods.get(lat=34.053, lng=-118.245)
+<Neighborhood: Downtown>
+>> mappingla.regions.get(lat=34.053, lng=-118.245)
+<Region: Central L.A.>
+
+# Retrieve the boundaries of a neighborhood or region in KML, GeoJSON or KMZ format
+>> dtla.kml
 ...
+>> dtla.json
+...
+>> dtla.kmz
+...
+>> westside.kml
+...
+>> westside.json
+...
+>> westside.kmz
+...
+</code></pre>
 """
  
 __author__ = "Ben Welsh (ben.welsh@latimes.com)"
@@ -132,11 +146,15 @@ class GeographyDoesNotExist(Exception):
     """
     def __init__(self, value):
         self.parameter = value
+    
     def __str__(self):
         return repr(self.value)
 
 
 class mappingla(object):
+    """
+    The main public method for interacting with the API.
+    """
 
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
     # For storing calls we've already made.
