@@ -51,10 +51,13 @@ class BaseGeographyObject(object):
         self.__dict__ = d
     
     def __repr__(self):
-        return u'<%s: %s>' % (self.__class__.__name__, self.__str__())
+        return '<%s: %s>' % (self.__class__.__name__, self.__str__())
     
     def __str__(self):
-        return unicode(self.name).encode("utf-8")
+        return self.__unicode__().encode("utf-8")
+    
+    def __unicode__(self):
+        return unicode(self.name)
     
     def _get_url(self, url, format):
         """
