@@ -8,9 +8,6 @@
                        \ \_\   \ \_\                /\____/                    
                         \/_/    \/_/                \_/__/                     
 </code></pre>
-
-!http://www.latimes.com/includes/projects/img/mapping_la/mappingLA_55px.jpg(Mapping L.A.)!:http://mappingla.com
-
 A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.com/mapping-la/api/. A quick way to get the boundaries of Mapping L.A. neighborhoods and regions.
 
 h3. Example usage
