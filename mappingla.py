@@ -222,6 +222,9 @@ class mappingla(object):
     #
 
     class neighborhoods(object):
+        """
+        Methods for collecting Neighborhood boundaries.
+        """
 
         @staticmethod
         def all():
@@ -276,6 +279,9 @@ class mappingla(object):
             return obj
 
     class regions(object):
+        """
+        Methods for collecting regional boundaries.
+        """
 
         @staticmethod
         def all():
