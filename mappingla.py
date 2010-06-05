@@ -1,7 +1,7 @@
 """
 Python library for interacting with The Los Angeles Times Mapping L.A. API.
  
-Mapping LA (http://mappingla.com) provides The Times custom boundaries
+Mapping LA (http://mappingla.com) provides The Times' custom boundaries
 of neighborhoods and regions for all of Los Angeles County.
 
 Data are available in KML, GeoJSON and KMZ formats.
