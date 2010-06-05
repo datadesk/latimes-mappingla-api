@@ -158,10 +158,15 @@ class mappingla(object):
     """
     The main public method for interacting with the API.
     """
+    
     BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
     # For storing calls we've already made.
     # URLs will be keys, responses will be values
     _cache = {}
+
+    #
+    # Private methods
+    #
 
     @staticmethod
     def _makeurl(version=u'v1', area_type=None, method=None, format='json', params=None):
@@ -211,6 +216,10 @@ class mappingla(object):
         """
         result = mappingla._apicall(area_type=area_type[:-1], method='getList')
         return json.loads(result)[area_type]
+
+    # 
+    # Public methods
+    #
 
     class neighborhoods(object):
 
