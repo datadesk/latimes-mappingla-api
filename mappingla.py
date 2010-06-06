@@ -159,7 +159,7 @@ class mappingla(object):
     The main public method for interacting with the API.
     """
     
-    BASE_URL = u'http://projects.latimes.com/mapping-la-v4/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
+    BASE_URL = u'http://projects.latimes.com/mapping-la/api/%(version)s/%(area_type)s/%(method)s.%(format)s'
     # For storing calls we've already made.
     # URLs will be keys, responses will be values
     _cache = {}
