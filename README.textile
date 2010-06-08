@@ -15,6 +15,8 @@ A python wrapper for accessing the "Mapping L.A. API":http://projects.latimes.co
 
 The code owes a lot to the fine work on "python-sunlightapi":http://github.com/sunlightlabs/python-sunlightapi and "python-nytcongressapi":http://github.com/dwillis/python-nytcongressapi.
 
+A demonstration of the API in action can be found in "latimes-mappingla-redirect":http://github.com/palewire/latimes-mappingla-redirects.
+
 h2. Usage
 
 *Get it going*
